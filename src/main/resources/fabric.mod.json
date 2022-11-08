@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "craftablepotioncombinations",
+  "version": "${version}",
+
+  "name": "Craftable Potion Combinations",
+  "description": "Enables combining Potions through the Crafting Grid",
+  "icon": "assets/craftablepotioncombinations/icon.png",
+  "authors": [
+    "Pepperoni__Jabroni__"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/map-atlases",
+    "sources": "https://github.com/Pepperoni-Jabroni/MapAtlases",
+    "issues": "https://github.com/Pepperoni-Jabroni/MapAtlases/issues"
+  },
+
+  "license": "GPL-3.0",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": ["pepjebs.craftablepotioncombinations.CraftablePotionCombinationsMod"]
+  },
+
+  "depends": {
+    "fabricloader": ">=0.14.6",
+    "fabric": "*",
+    "minecraft": "~1.19",
+    "java": ">=17"
+  }
+}
