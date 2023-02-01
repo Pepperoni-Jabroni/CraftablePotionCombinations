@@ -23,7 +23,8 @@ public class CraftablePotionCombinationCraftingRecipe extends SpecialCraftingRec
 
     @Override
     public boolean matches(CraftingInventory inventory, World world) {
-        return !inventory.containsAny(p -> !p.isOf(Items.POTION) && !p.isEmpty());
+        return inventory.containsAny(p -> p.isOf(Items.POTION) && !p.isEmpty())
+                && !inventory.containsAny(p -> !p.isOf(Items.POTION) && !p.isEmpty());
     }
 
     @Override
