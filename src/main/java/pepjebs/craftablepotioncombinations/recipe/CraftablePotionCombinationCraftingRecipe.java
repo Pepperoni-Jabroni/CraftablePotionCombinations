@@ -4,6 +4,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtInt;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
@@ -30,12 +31,27 @@ public class CraftablePotionCombinationCraftingRecipe extends SpecialCraftingRec
     @Override
     public ItemStack craft(CraftingInventory inventory) {
         List<StatusEffectInstance> statusEffects = new ArrayList<>();
+        int colorR = 0;
+        int colorG = 0;
+        int colorB = 0;
+        int potionCount = 0;
         for (int i = 0; i < inventory.size(); i++) {
             var stack = inventory.getStack(i);
             if (stack.isEmpty()) continue;
             statusEffects.addAll(PotionUtil.getPotionEffects(stack));
+            int stackColor = PotionUtil.getColor(stack);
+            colorR += stackColor >> 16;
+            colorG += stackColor >> 8 & 0xFF;
+            colorB += stackColor & 0xFF;
+            ++potionCount;
         }
-        return PotionUtil.setCustomPotionEffects(new ItemStack(Items.POTION), statusEffects);
+        ItemStack result = PotionUtil.setCustomPotionEffects(new ItemStack(Items.POTION), statusEffects);
+        result.setSubNbt("CustomPotionColor", NbtInt.of(
+                (colorR / potionCount << 16) +
+                (colorG / potionCount << 8) +
+                (colorB / potionCount)
+        ));
+        return result;
     }
 
     @Override
