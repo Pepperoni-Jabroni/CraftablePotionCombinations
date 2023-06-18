@@ -1,13 +1,15 @@
 package pepjebs.craftablepotioncombinations.recipe;
 
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtInt;
 import net.minecraft.potion.PotionUtil;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.SpecialCraftingRecipe;
+import net.minecraft.recipe.book.CraftingRecipeCategory;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
@@ -18,18 +20,18 @@ import java.util.List;
 
 public class CraftablePotionCombinationCraftingRecipe extends SpecialCraftingRecipe {
 
-    public CraftablePotionCombinationCraftingRecipe(Identifier id) {
-        super(id);
+    public CraftablePotionCombinationCraftingRecipe(Identifier id, CraftingRecipeCategory category) {
+        super(id, category);
     }
 
     @Override
-    public boolean matches(CraftingInventory inventory, World world) {
+    public boolean matches(RecipeInputInventory inventory, World world) {
         return inventory.containsAny(p -> p.isOf(Items.POTION) && !p.isEmpty())
                 && !inventory.containsAny(p -> !p.isOf(Items.POTION) && !p.isEmpty());
     }
 
     @Override
-    public ItemStack craft(CraftingInventory inventory) {
+    public ItemStack craft(RecipeInputInventory inventory, DynamicRegistryManager registryManager) {
         List<StatusEffectInstance> statusEffects = new ArrayList<>();
         int colorR = 0;
         int colorG = 0;
@@ -65,7 +67,7 @@ public class CraftablePotionCombinationCraftingRecipe extends SpecialCraftingRec
     }
 
     @Override
-    public DefaultedList<ItemStack> getRemainder(CraftingInventory inventory) {
+    public DefaultedList<ItemStack> getRemainder(RecipeInputInventory inventory) {
         DefaultedList<ItemStack> remainder = DefaultedList.of();
         boolean firstPotion = true;
         for (int i = 0; i < inventory.size(); i++) {
