@@ -20,8 +20,8 @@ import java.util.List;
 
 public class CraftablePotionCombinationCraftingRecipe extends SpecialCraftingRecipe {
 
-    public CraftablePotionCombinationCraftingRecipe(Identifier id, CraftingRecipeCategory category) {
-        super(id, category);
+    public CraftablePotionCombinationCraftingRecipe(CraftingRecipeCategory category) {
+        super(category);
     }
 
     @Override
