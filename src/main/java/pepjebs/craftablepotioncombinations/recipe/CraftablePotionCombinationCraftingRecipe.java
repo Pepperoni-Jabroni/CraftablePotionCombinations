@@ -27,14 +27,12 @@ public class CraftablePotionCombinationCraftingRecipe extends SpecialCraftingRec
 
     @Override
     public boolean matches(CraftingRecipeInput input, World world) {
-        CraftablePotionCombinationsMod.LOGGER.info("matches");
         return input.getStacks().stream().anyMatch(p -> p.isOf(Items.POTION) && !p.isEmpty())
                 && input.getStacks().stream().noneMatch(p -> !p.isOf(Items.POTION) && !p.isEmpty());
     }
 
     @Override
     public ItemStack craft(CraftingRecipeInput inventory, RegistryWrapper.WrapperLookup lookup) {
-        CraftablePotionCombinationsMod.LOGGER.info("craft");
         List<StatusEffectInstance> statusEffects = new ArrayList<>();
         int colorR = 0;
         int colorG = 0;
