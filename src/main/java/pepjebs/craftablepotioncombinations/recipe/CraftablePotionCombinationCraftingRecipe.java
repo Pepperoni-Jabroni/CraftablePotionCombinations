@@ -39,7 +39,7 @@ public class CraftablePotionCombinationCraftingRecipe extends SpecialCraftingRec
         int colorB = 0;
         int potionCount = 0;
         ItemStack potion = null;
-        for (int i = 0; i < inventory.getSize(); i++) {
+        for (int i = 0; i < inventory.size(); i++) {
             var stack = inventory.getStackInSlot(i);
             if (stack.isEmpty() || !stack.getComponents().contains(DataComponentTypes.POTION_CONTENTS)) continue;
             Collection<StatusEffectInstance> collection = new ArrayList<>();
@@ -56,25 +56,20 @@ public class CraftablePotionCombinationCraftingRecipe extends SpecialCraftingRec
         result.set(DataComponentTypes.POTION_CONTENTS, new PotionContentsComponent(
                 Optional.empty(), Optional.of((colorR / potionCount << 16) +
                 (colorG / potionCount << 8) +
-                (colorB / potionCount)), statusEffects));
+                (colorB / potionCount)), statusEffects, Optional.empty()));
         return result;
     }
 
     @Override
-    public boolean fits(int width, int height) {
-        return width * height > 2;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<CraftablePotionCombinationCraftingRecipe> getSerializer(){
         return CraftablePotionCombinationsMod.CRAFTABLE_POTION_COMBINATION;
     }
 
     @Override
-    public DefaultedList<ItemStack> getRemainder(CraftingRecipeInput inventory) {
+    public DefaultedList<ItemStack> getRecipeRemainders(CraftingRecipeInput inventory) {
         DefaultedList<ItemStack> remainder = DefaultedList.of();
         boolean firstPotion = true;
-        for (int i = 0; i < inventory.getSize(); i++) {
+        for (int i = 0; i < inventory.size(); i++) {
             var stack = inventory.getStackInSlot(i);
             if (stack.isOf(Items.POTION) && !firstPotion) {
                 remainder.add(new ItemStack(Items.GLASS_BOTTLE));
